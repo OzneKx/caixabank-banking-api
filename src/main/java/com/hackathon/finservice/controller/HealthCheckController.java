@@ -1,16 +1,17 @@
-package com.hackathon.finservice.Controllers;
+package com.hackathon.finservice.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/health")
+@RequestMapping("/api")
 public class HealthCheckController {
 
-    @GetMapping
-    public String healthCheck() {
-        return "API is working";
+    @GetMapping("/health")
+    public ResponseEntity<String> healthCheck() {
+        return ResponseEntity.ok("API is working");
     }
 }
 
