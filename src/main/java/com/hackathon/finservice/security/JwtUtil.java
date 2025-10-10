@@ -17,7 +17,7 @@ public class JwtUtil {
     @Value("${" + SECRET_KEY_PROPERTY + "}")
     private String jwtSecret;
 
-    @Value("${ " + JWT_EXPIRATION_PROPERTY + "}")
+    @Value("${" + JWT_EXPIRATION_PROPERTY + "}")
     private long jwtExpiration;
 
     public String generateToken(UserDetails userDetails) {
