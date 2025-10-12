@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
@@ -85,7 +86,7 @@ public class AccountService {
         Account newAccount = new Account();
         newAccount.setAccountNumber(generateAccountNumber());
         newAccount.setAccountType(accountCreateRequest.accountType());
-        newAccount.setBalance(0.0);
+        newAccount.setBalance(BigDecimal.ZERO);
         newAccount.setUser(user);
 
         accountRepository.save(newAccount);
