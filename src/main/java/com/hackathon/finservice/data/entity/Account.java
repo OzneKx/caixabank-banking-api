@@ -16,6 +16,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "accounts")
 @NoArgsConstructor
@@ -32,7 +34,8 @@ public class Account {
     String accountNumber;
 
     String accountType;
-    double balance = 0.0;
+
+    BigDecimal balance = BigDecimal.ZERO;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

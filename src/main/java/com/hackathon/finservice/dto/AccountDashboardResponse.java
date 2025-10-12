@@ -1,8 +1,10 @@
 package com.hackathon.finservice.dto;
 
+import java.math.BigDecimal;
+
 public record AccountDashboardResponse(
         String accountNumber,
-        double balance,
+        BigDecimal balance,
         String accountType
     ) {
 }

@@ -1,7 +1,7 @@
 package com.hackathon.finservice.data.entity;
 
 public enum TransactionType {
-    DEPOSIT,
-    WITHDRAW,
-    TRANSFER
+    CASH_DEPOSIT,
+    CASH_WITHDRAW,
+    CASH_TRANSFER
 }
