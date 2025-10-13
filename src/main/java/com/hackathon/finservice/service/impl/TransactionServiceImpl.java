@@ -13,16 +13,17 @@ import com.hackathon.finservice.dto.MessageResponse;
 import com.hackathon.finservice.dto.TransactionResponse;
 import com.hackathon.finservice.dto.TransferRequest;
 import com.hackathon.finservice.dto.WithdrawRequest;
+import com.hackathon.finservice.exception.AccountNotFoundException;
+import com.hackathon.finservice.exception.InsufficientBalanceException;
+import com.hackathon.finservice.exception.InvalidAmountException;
+import com.hackathon.finservice.exception.UserNotFoundException;
 import com.hackathon.finservice.service.TransactionService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
@@ -64,7 +65,7 @@ public class TransactionServiceImpl implements TransactionService {
         checkIfAmountIsValidForTransaction(amount);
 
         if (checkIfAccountHasInsufficientBalance(account, amount)) {
-            return new MessageResponse("Insufficient balance");
+            throw new InsufficientBalanceException();
         }
 
         Transaction transaction = transactionMapper.toEntity(amount, TransactionType.CASH_WITHDRAW);
@@ -84,7 +85,7 @@ public class TransactionServiceImpl implements TransactionService {
         checkIfAmountIsValidForTransaction(amount);
 
         if (checkIfAccountHasInsufficientBalance(source, amount)) {
-            return new MessageResponse("Insufficient balance");
+            throw new InsufficientBalanceException();
         }
 
         Transaction transaction = transactionMapper.toEntity(amount, TransactionType.CASH_TRANSFER);
@@ -106,30 +107,24 @@ public class TransactionServiceImpl implements TransactionService {
 
     private User getAuthenticatedUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userRepository.findByEmail(email).orElseThrow(() -> new ResponseStatusException(
-                BAD_REQUEST,
-                "User not found for the given identifier: " + email
-        ));
+        return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException(email));
     }
 
     private Account getMainAccountFromAuthenticatedUser(User user) {
         return user.getAccounts().stream()
                 .filter(account -> "Main".equalsIgnoreCase(account.getAccountType()))
                 .findFirst()
-                .orElseThrow(() -> new ResponseStatusException(
-                        BAD_REQUEST,
-                        "Main account not found for the given identifier: " + user.getEmail()
-                ));
+                .orElseThrow(AccountNotFoundException::new);
     }
 
     private Account getTargetAccountForTransfer(TransferRequest transferRequest) {
         return accountRepository.findByAccountNumber(transferRequest.targetAccountNumber())
-                .orElseThrow(() -> new RuntimeException("Target account not found"));
+                .orElseThrow(AccountNotFoundException::new);
     }
 
     private void checkIfAmountIsValidForTransaction(BigDecimal amount) {
         if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("Invalid amount");
+            throw new InvalidAmountException();
         }
     }
 

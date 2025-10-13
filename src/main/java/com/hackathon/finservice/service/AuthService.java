@@ -4,16 +4,15 @@ import com.hackathon.finservice.data.entity.Token;
 import com.hackathon.finservice.data.entity.User;
 import com.hackathon.finservice.data.repository.TokenRepository;
 import com.hackathon.finservice.data.repository.UserRepository;
+import com.hackathon.finservice.exception.InvalidTokenException;
 import com.hackathon.finservice.security.CustomUserDetailsService;
 import com.hackathon.finservice.security.JwtUtil;
 import jakarta.transaction.Transactional;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @Service
 @Transactional
@@ -49,15 +48,12 @@ public class AuthService {
 
     private User findUserByEmail(String email) {
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new ResponseStatusException(
-                        BAD_REQUEST,
-                        "User not found for the given identifier: " + email
-                ));
+                .orElseThrow(() -> new UsernameNotFoundException(email));
     }
 
     private void validatePassword(String rawPassword, User user) {
         if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
-            throw new ResponseStatusException(UNAUTHORIZED, "Bad credentials");
+            throw new BadCredentialsException("Bad credentials");
         }
     }
 
@@ -78,10 +74,7 @@ public class AuthService {
     }
 
     private Token findToken(String tokenExtracted) {
-        return tokenRepository.findByToken(tokenExtracted).orElseThrow(() -> new ResponseStatusException(
-                BAD_REQUEST,
-                "Invalid token"
-        ));
+        return tokenRepository.findByToken(tokenExtracted).orElseThrow(InvalidTokenException::new);
     }
 
     private void revokeToken(Token token) {

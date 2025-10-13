@@ -6,6 +6,8 @@ import com.hackathon.finservice.data.mapper.UserMapper;
 import com.hackathon.finservice.data.repository.UserRepository;
 import com.hackathon.finservice.dto.UserRequest;
 import com.hackathon.finservice.dto.UserResponse;
+import com.hackathon.finservice.exception.EmailAlreadyExistsException;
+import com.hackathon.finservice.util.PasswordValidator;
 import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,8 @@ public class UserService {
 
     @Transactional
     public UserResponse registerUserWithMainAccount(UserRequest userRequest) {
+        PasswordValidator.validatePassword(userRequest.getPassword());
+
         validateEmailUniqueness(userRequest.getEmail());
 
         User user = prepareUserForRegistration(userRequest);
@@ -42,7 +46,7 @@ public class UserService {
 
     private void validateEmailUniqueness(String email) {
         if (userRepository.existsByEmail(email)) {
-            throw new IllegalArgumentException("Email already exists");
+            throw new EmailAlreadyExistsException();
         }
     }
 
