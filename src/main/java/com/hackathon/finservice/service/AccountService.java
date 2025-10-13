@@ -7,16 +7,15 @@ import com.hackathon.finservice.data.repository.UserRepository;
 import com.hackathon.finservice.dto.AccountCreateRequest;
 import com.hackathon.finservice.dto.AccountDashboardResponse;
 import com.hackathon.finservice.dto.UserDashboardResponse;
+import com.hackathon.finservice.exception.AccountNotFoundException;
+import com.hackathon.finservice.exception.UserNotFoundException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
-
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @Service
 public class AccountService {
@@ -62,7 +61,7 @@ public class AccountService {
                 .toList();
 
         if (index < 0 || index >= userAccountsOrderedById.size()) {
-            throw new ResponseStatusException(BAD_REQUEST, "Account index out of range");
+            throw new AccountNotFoundException();
         }
 
         Account account = userAccountsOrderedById.get(index);
@@ -78,10 +77,7 @@ public class AccountService {
         user.getAccounts().stream()
                 .filter(account -> account.getAccountNumber().equals(accountCreateRequest.accountNumber()))
                 .findFirst()
-                .orElseThrow(() -> new ResponseStatusException(
-                        BAD_REQUEST,
-                        "Invalid main account number for the given identifier: " + user.getEmail()
-                ));
+                .orElseThrow(AccountNotFoundException::new);
 
         Account newAccount = new Account();
         newAccount.setAccountNumber(generateAccountNumber());
@@ -94,20 +90,14 @@ public class AccountService {
 
     private User getAuthenticatedUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userRepository.findByEmail(email).orElseThrow(() -> new ResponseStatusException(
-                BAD_REQUEST,
-                "User not found for the given identifier: " + email
-        ));
+        return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException(email));
     }
 
     private Account getMainAccountFromAuthenticatedUser(User user) {
         return user.getAccounts().stream()
             .filter(account -> "Main".equalsIgnoreCase(account.getAccountType()))
             .findFirst()
-            .orElseThrow(() -> new ResponseStatusException(
-                    BAD_REQUEST,
-                    "Main account not found for the given identifier: " + user.getEmail()
-            ));
+            .orElseThrow(AccountNotFoundException::new);
     }
 
     private String generateAccountNumber() {

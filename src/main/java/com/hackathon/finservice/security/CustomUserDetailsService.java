@@ -2,6 +2,7 @@ package com.hackathon.finservice.security;
 
 import com.hackathon.finservice.data.entity.User;
 import com.hackathon.finservice.data.repository.UserRepository;
+import com.hackathon.finservice.exception.UserNotFoundException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,7 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found for the given identifier: " + email));
+                .orElseThrow(() -> new UserNotFoundException(email));
 
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
