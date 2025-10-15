@@ -14,10 +14,10 @@ public class JwtUtil {
     private static final String SECRET_KEY_PROPERTY = "jwt.secret";
     private static final String JWT_EXPIRATION_PROPERTY = "jwt.expiration";
 
-    @Value("${" + SECRET_KEY_PROPERTY + "}")
+    @Value("${jwt.secret}")
     private String jwtSecret;
 
-    @Value("${" + JWT_EXPIRATION_PROPERTY + "}")
+    @Value("${jwt.expiration}")
     private long jwtExpiration;
 
     public String generateToken(UserDetails userDetails) {

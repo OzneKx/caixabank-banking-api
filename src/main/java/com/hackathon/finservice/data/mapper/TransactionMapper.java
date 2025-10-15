@@ -34,7 +34,7 @@ public interface TransactionMapper {
                     expression = "java(transaction.getSourceAccount() != null ? " +
                             "transaction.getSourceAccount().getAccountNumber() : null)"),
             @Mapping(target = "targetAccountNumber",
-                    expression = "java(transaction.getTargetAccount() != null  " +
+                    expression = "java(transaction.getTargetAccount() != null ? " +
                             "transaction.getTargetAccount().getAccountNumber() : null)")
     })
     TransactionResponse toResponse(Transaction transaction);
