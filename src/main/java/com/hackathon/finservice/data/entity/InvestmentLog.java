@@ -40,7 +40,7 @@ public class InvestmentLog {
     @Column(nullable = false, precision = 15, scale = 2)
     BigDecimal interestApplied;
 
-    @Column(nullable = false, scale = 15, precision = 2)
+    @Column(nullable = false, precision = 15, scale = 2)
     BigDecimal newBalance;
 
     LocalTime appliedAt = LocalTime.now();
