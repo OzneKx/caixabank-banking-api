@@ -1,4 +1,4 @@
-package com.hackathon.finservice.dto;
+package com.hackathon.finservice.dto.transaction;
 
 import com.hackathon.finservice.data.entity.TransactionStatus;
 import com.hackathon.finservice.data.entity.TransactionType;

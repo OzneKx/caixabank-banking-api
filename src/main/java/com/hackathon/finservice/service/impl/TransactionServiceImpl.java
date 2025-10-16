@@ -8,15 +8,15 @@ import com.hackathon.finservice.data.mapper.TransactionMapper;
 import com.hackathon.finservice.data.repository.AccountRepository;
 import com.hackathon.finservice.data.repository.TransactionRepository;
 import com.hackathon.finservice.data.repository.UserRepository;
-import com.hackathon.finservice.dto.DepositRequest;
-import com.hackathon.finservice.dto.MessageResponse;
-import com.hackathon.finservice.dto.TransactionResponse;
-import com.hackathon.finservice.dto.TransferRequest;
-import com.hackathon.finservice.dto.WithdrawRequest;
+import com.hackathon.finservice.dto.transaction.DepositRequest;
+import com.hackathon.finservice.dto.transaction.MessageResponse;
+import com.hackathon.finservice.dto.transaction.TransactionResponse;
+import com.hackathon.finservice.dto.transaction.TransferRequest;
+import com.hackathon.finservice.dto.transaction.WithdrawRequest;
 import com.hackathon.finservice.exception.AccountNotFoundException;
 import com.hackathon.finservice.exception.InsufficientBalanceException;
 import com.hackathon.finservice.exception.InvalidAmountException;
-import com.hackathon.finservice.exception.UserNotFoundException;
+import com.hackathon.finservice.exception.InvalidEmailException;
 import com.hackathon.finservice.service.TransactionService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -107,7 +107,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     private User getAuthenticatedUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException(email));
+        return userRepository.findByEmail(email).orElseThrow(() -> new InvalidEmailException(email));
     }
 
     private Account getMainAccountFromAuthenticatedUser(User user) {

@@ -1,8 +1,8 @@
 package com.hackathon.finservice.controller;
 
-import com.hackathon.finservice.dto.AuthRequest;
-import com.hackathon.finservice.dto.AuthResponse;
-import com.hackathon.finservice.dto.LogoutResponse;
+import com.hackathon.finservice.dto.auth.AuthRequest;
+import com.hackathon.finservice.dto.auth.AuthResponse;
+import com.hackathon.finservice.dto.auth.LogoutResponse;
 import com.hackathon.finservice.service.AuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

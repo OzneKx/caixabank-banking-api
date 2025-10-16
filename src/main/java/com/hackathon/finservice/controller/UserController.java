@@ -1,7 +1,7 @@
 package com.hackathon.finservice.controller;
 
-import com.hackathon.finservice.dto.UserRequest;
-import com.hackathon.finservice.dto.UserResponse;
+import com.hackathon.finservice.dto.user.UserRequest;
+import com.hackathon.finservice.dto.user.UserResponse;
 import com.hackathon.finservice.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;

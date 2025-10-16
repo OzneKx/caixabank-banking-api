@@ -4,11 +4,11 @@ import com.hackathon.finservice.data.entity.Account;
 import com.hackathon.finservice.data.entity.User;
 import com.hackathon.finservice.data.repository.AccountRepository;
 import com.hackathon.finservice.data.repository.UserRepository;
-import com.hackathon.finservice.dto.AccountCreateRequest;
-import com.hackathon.finservice.dto.AccountDashboardResponse;
-import com.hackathon.finservice.dto.UserDashboardResponse;
+import com.hackathon.finservice.dto.account.AccountCreateRequest;
+import com.hackathon.finservice.dto.account.AccountDashboardResponse;
+import com.hackathon.finservice.dto.account.UserDashboardResponse;
 import com.hackathon.finservice.exception.AccountNotFoundException;
-import com.hackathon.finservice.exception.UserNotFoundException;
+import com.hackathon.finservice.exception.InvalidEmailException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -90,7 +90,7 @@ public class AccountService {
 
     private User getAuthenticatedUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException(email));
+        return userRepository.findByEmail(email).orElseThrow(() -> new InvalidEmailException(email));
     }
 
     private Account getMainAccountFromAuthenticatedUser(User user) {

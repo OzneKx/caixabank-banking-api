@@ -1,7 +1,6 @@
-package com.hackathon.finservice.dto;
+package com.hackathon.finservice.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
@@ -20,8 +19,6 @@ public class UserRequest {
     @JsonProperty("name")
     String name;
 
-    @NotBlank(message = "Email is required")
-    @Email(message = "Invalid email format")
     @Size(max = 120)
     @JsonProperty("email")
     String email;

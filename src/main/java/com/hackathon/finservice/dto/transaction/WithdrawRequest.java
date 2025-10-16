@@ -1,4 +1,4 @@
-package com.hackathon.finservice.dto;
+package com.hackathon.finservice.dto.transaction;
 
 import java.math.BigDecimal;
 
