@@ -1,13 +1,12 @@
 package com.hackathon.finservice.controller;
 
-import com.hackathon.finservice.dto.DepositRequest;
-import com.hackathon.finservice.dto.MessageResponse;
-import com.hackathon.finservice.dto.TransactionResponse;
-import com.hackathon.finservice.dto.TransferRequest;
-import com.hackathon.finservice.dto.WithdrawRequest;
+import com.hackathon.finservice.dto.transaction.DepositRequest;
+import com.hackathon.finservice.dto.transaction.MessageResponse;
+import com.hackathon.finservice.dto.transaction.TransactionResponse;
+import com.hackathon.finservice.dto.transaction.TransferRequest;
+import com.hackathon.finservice.dto.transaction.WithdrawRequest;
 import com.hackathon.finservice.service.MonitoringService;
 import com.hackathon.finservice.service.TransactionService;
-import com.hackathon.finservice.service.impl.MonitoringServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

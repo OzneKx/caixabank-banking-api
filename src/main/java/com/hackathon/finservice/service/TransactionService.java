@@ -1,10 +1,10 @@
 package com.hackathon.finservice.service;
 
-import com.hackathon.finservice.dto.DepositRequest;
-import com.hackathon.finservice.dto.MessageResponse;
-import com.hackathon.finservice.dto.TransactionResponse;
-import com.hackathon.finservice.dto.TransferRequest;
-import com.hackathon.finservice.dto.WithdrawRequest;
+import com.hackathon.finservice.dto.transaction.DepositRequest;
+import com.hackathon.finservice.dto.transaction.MessageResponse;
+import com.hackathon.finservice.dto.transaction.TransactionResponse;
+import com.hackathon.finservice.dto.transaction.TransferRequest;
+import com.hackathon.finservice.dto.transaction.WithdrawRequest;
 
 import java.util.List;
 

@@ -4,13 +4,13 @@ import com.hackathon.finservice.data.entity.Token;
 import com.hackathon.finservice.data.entity.User;
 import com.hackathon.finservice.data.repository.TokenRepository;
 import com.hackathon.finservice.data.repository.UserRepository;
+import com.hackathon.finservice.exception.InvalidEmailException;
 import com.hackathon.finservice.exception.InvalidTokenException;
 import com.hackathon.finservice.security.CustomUserDetailsService;
 import com.hackathon.finservice.security.JwtUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -48,7 +48,7 @@ public class AuthService {
 
     private User findUserByEmail(String email) {
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException(email));
+                .orElseThrow(() -> new InvalidEmailException(email));
     }
 
     private void validatePassword(String rawPassword, User user) {

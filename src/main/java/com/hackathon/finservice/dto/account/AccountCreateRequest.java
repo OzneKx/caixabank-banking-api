@@ -1,4 +1,4 @@
-package com.hackathon.finservice.dto;
+package com.hackathon.finservice.dto.account;
 
 import jakarta.validation.constraints.NotBlank;
 

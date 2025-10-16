@@ -2,7 +2,7 @@ package com.hackathon.finservice.data.mapper;
 
 import com.hackathon.finservice.data.entity.Transaction;
 import com.hackathon.finservice.data.entity.TransactionType;
-import com.hackathon.finservice.dto.TransactionResponse;
+import com.hackathon.finservice.dto.transaction.TransactionResponse;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

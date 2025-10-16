@@ -1,8 +1,8 @@
 package com.hackathon.finservice.data.mapper;
 
 import com.hackathon.finservice.data.entity.User;
-import com.hackathon.finservice.dto.UserRequest;
-import com.hackathon.finservice.dto.UserResponse;
+import com.hackathon.finservice.dto.user.UserRequest;
+import com.hackathon.finservice.dto.user.UserResponse;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

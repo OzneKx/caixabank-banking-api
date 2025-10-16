@@ -1,8 +1,8 @@
 package com.hackathon.finservice.controller;
 
-import com.hackathon.finservice.dto.AccountCreateRequest;
-import com.hackathon.finservice.dto.AccountDashboardResponse;
-import com.hackathon.finservice.dto.UserDashboardResponse;
+import com.hackathon.finservice.dto.account.AccountCreateRequest;
+import com.hackathon.finservice.dto.account.AccountDashboardResponse;
+import com.hackathon.finservice.dto.account.UserDashboardResponse;
 import com.hackathon.finservice.service.AccountService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +33,7 @@ public class AccountController {
         return ResponseEntity.ok(accountDashboardResponse);
     }
 
-    @GetMapping("/dashboard/accoundt/{index}")
+    @GetMapping("/dashboard/account/{index}")
     public ResponseEntity<AccountDashboardResponse> getAccountByIndex(@PathVariable int index) {
         AccountDashboardResponse accountDashboardResponse = accountService.getAccountByIndex(index);
         return ResponseEntity.ok(accountDashboardResponse);
